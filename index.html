@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finovate</title>
-    <link rel="stylesheet" href="styleguide.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Экран входа -->
@@ -13,7 +13,7 @@
             <div class="logo">F</div>
             <h1>Finovate</h1>
             <form id="login-form">
-                <input type="tel" id="phone" placeholder="Номер телефона" required>
+                <input type="tel" id="phone" placeholder="Номер телефона" required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
                 <input type="password" id="password" placeholder="Пароль" required>
                 <button type="submit">Войти</button>
             </form>
@@ -375,6 +375,28 @@
                 <button onclick="sendMessage()">Отправить</button>
             </div>
         </div>
+    </div>
+
+    <!-- Админская панель -->
+    <div id="admin-panel" class="screen">
+        <div class="header">
+            <h2>Админская панель</h2>
+        </div>
+        <div class="admin-content" style="padding: 20px;">
+            <h3>Добавление нового пользователя</h3>
+            <form id="add-user-form">
+                <div class="form-group">
+                    <label>Номер телефона (логин)</label>
+                    <input type="tel" id="new-phone" placeholder="+7 (999) 999-99-99" required pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="text" id="new-password" placeholder="Пароль" required>
+                </div>
+                <button type="submit">Добавить пользователя</button>
+            </form>
+        </div>
+        <button class="back-btn" onclick="showScreen('login-screen')" style="margin: 20px;">Выйти</button>
     </div>
 
     <script src="script.js"></script>
