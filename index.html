@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finovate</title>
+    <link rel="stylesheet" href="styleguide.css">
+</head>
+<body>
+    <!-- Экран входа -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <div class="logo">F</div>
+            <h1>Finovate</h1>
+            <form id="login-form">
+                <input type="tel" id="phone" placeholder="Номер телефона" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button type="submit">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Главный экран -->
+    <div id="main-screen" class="screen">
+        <div class="header">
+            <div class="profile-btn" onclick="showScreen('profile-screen')">
+                <img id="profile-avatar" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGRkYiLz4KPHBhdGggZD0iTTIwIDEwQzE3LjI0IDE4IDE1IDEwIDE1IDEwQzEyLjc2IDEwIDEwLjQ2IDExLjQ2IDEwIDEzVjE5SDE1VjEzSDI1VjE5SDMwVjEzQzI5LjU0IDExLjQ2IDI3LjI0IDEwIDI1IDEwQzIyLjc2IDEwIDIwIDEwIDIwIDEwWiIgZmlsbD0iIzMzMyIvPgo8L3N2Zz4K" alt="Профиль">
+            </div>
+            <h2>Главная</h2>
+        </div>
+        
+        <div class="balance-card">
+            <div class="balance-amount">$3,469.52</div>
+            <div class="card-number">•••• •••• •••• 0018</div>
+            <div class="card-type">VISA</div>
+        </div>
+
+        <div class="quick-actions">
+            <div class="action-btn" onclick="showScreen('cards-screen')">
+                <div class="action-icon">💳</div>
+                <span>Мои карты</span>
+            </div>
+            <div class="action-btn" onclick="showScreen('transfers-screen')">
+                <div class="action-icon">💸</div>
+                <span>Переводы</span>
+            </div>
+            <div class="action-btn" onclick="showScreen('subscriptions-screen')">
+                <div class="action-icon">📱</div>
+                <span>Подписки</span>
+            </div>
+            <div class="action-btn" onclick="showScreen('tax-screen')">
+                <div class="action-icon">📋</div>
+                <span>Налоги</span>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">🏠</div>
+                <span>Главная</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('transfers-screen')">
+                <div class="nav-icon">💸</div>
+                <span>Переводы</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('support-screen')">
+                <div class="nav-icon">💬</div>
+                <span>Поддержка</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('profile-screen')">
+                <div class="nav-icon">👤</div>
+                <span>Профиль</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран карт -->
+    <div id="cards-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Между счетами</h2>
+        </div>
+
+        <div class="cards-container">
+            <div class="bank-card sber-card">
+                <div class="card-logo">СБЕР БАНК</div>
+                <div class="card-number">4274 3000 0000 0000</div>
+                <div class="card-holder">MR • САРНПО ЗЕК</div>
+                <div class="card-balance">$0.00</div>
+            </div>
+
+            <div class="bank-card finovate-card">
+                <div class="card-holder-name">Bogdan Fomichev</div>
+                <div class="card-bank">Finovate Bank</div>
+                <div class="card-number">•••• •••• •••• 1018</div>
+                <div class="card-balance">$3,469.52</div>
+                <div class="card-type-logo">VISA</div>
+            </div>
+        </div>
+
+        <button class="transfer-btn" onclick="showScreen('card-transfer-screen')">Перевести</button>
+
+        <button class="issue-card-btn" onclick="showScreen('issue-card-screen')">Выпустить новую карту</button>
+    </div>
+
+    <!-- Экран выпуска карт -->
+    <div id="issue-card-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('cards-screen')">←</button>
+            <h2>Выпуск карты</h2>
+        </div>
+
+        <div class="card-options">
+            <div class="card-option" onclick="issueCard('finovate')">
+                <h3>Finovate VISA</h3>
+                <p>Инновационная карта с глобальными возможностями</p>
+                <div class="card-preview finovate-preview"></div>
+            </div>
+
+            <div class="card-option" onclick="issueCard('sber')">
+                <h3>Сбер VISA</h3>
+                <p>Надежная карта от крупнейшего банка России</p>
+                <div class="card-preview sber-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран переводов между картами -->
+    <div id="card-transfer-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('cards-screen')">←</button>
+            <h2>Перевод между картами</h2>
+        </div>
+
+        <form id="card-transfer-form" class="transfer-form">
+            <div class="form-group">
+                <label>С карты</label>
+                <select id="from-card">
+                    <option value="finovate">Finovate VISA ••••1018</option>
+                    <option value="sber">Сбер VISA ••••0000</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>На карту</label>
+                <select id="to-card">
+                    <option value="sber">Сбер VISA ••••0000</option>
+                    <option value="finovate">Finovate VISA ••••1018</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Сумма</label>
+                <input type="number" id="transfer-amount" placeholder="0" required>
+            </div>
+
+            <button type="submit">Перевести</button>
+        </form>
+    </div>
+
+    <!-- Экран переводов -->
+    <div id="transfers-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Переводы</h2>
+        </div>
+
+        <div class="balance-display">
+            <div class="balance-amount">$3,469.52</div>
+            <div class="card-info">•••• •••• •••• 0018 VISA</div>
+        </div>
+
+        <div class="transfer-methods">
+            <div class="method-btn active" onclick="showTransferMethod('card')">
+                <div class="method-icon">💳</div>
+                <span>Переводы на номер карты</span>
+            </div>
+            <div class="method-btn" onclick="showTransferMethod('phone')">
+                <div class="method-icon">📱</div>
+                <span>По номеру телефона</span>
+            </div>
+        </div>
+
+        <div class="recent-contacts">
+            <div class="contact" onclick="selectContact('Эмили')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNGRkMxMDciLz4KPC9zdmc+" alt="Эмили">
+                <span>Эмили</span>
+            </div>
+            <div class="contact" onclick="selectContact('Михаил')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiM2Q0I2RkYiLz4KPC9zdmc+" alt="Михаил">
+                <span>Михаил</span>
+            </div>
+        </div>
+
+        <form id="transfer-form" class="transfer-form">
+            <div class="form-group">
+                <label>Получатель</label>
+                <input type="text" id="recipient-name" placeholder="Имя получателя">
+            </div>
+
+            <div class="form-group">
+                <label>Номер карты</label>
+                <input type="text" id="card-number" placeholder="0000 0000 0000 0000">
+            </div>
+
+            <div class="form-group">
+                <label>Сумма</label>
+                <input type="number" id="amount" placeholder="0" required>
+            </div>
+
+            <div class="form-group">
+                <label>Комментарий</label>
+                <input type="text" id="comment" placeholder="За ужин танцев">
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" id="save-recipient">
+                Сохранить получателя
+            </label>
+
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <!-- Экран подписок -->
+    <div id="subscriptions-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Подписки</h2>
+        </div>
+
+        <div class="subscriptions-header">
+            <h3>Активные подписки</h3>
+            <p>Управляйте своими подписками и следите за расходами</p>
+        </div>
+
+        <div class="subscription-item">
+            <div class="sub-icon netflix">N</div>
+            <div class="sub-info">
+                <div class="sub-name">Netflix</div>
+                <div class="sub-description">Netflix — это популярный американский стриминговый видеосервис. Смотрите документальные фильмы по подписке за $24.99/мес</div>
+                <div class="sub-price">$24.99/мес</div>
+            </div>
+            <div class="sub-actions">
+                <button class="change-plan-btn">Сменить план</button>
+                <button class="cancel-btn" onclick="cancelSubscription('netflix')">Отменить подписку</button>
+            </div>
+        </div>
+
+        <div class="subscription-item">
+            <div class="sub-icon okko">O</div>
+            <div class="sub-info">
+                <div class="sub-name">Okko</div>
+                <div class="sub-price">799 руб/мес</div>
+            </div>
+            <div class="sub-actions">
+                <button class="change-plan-btn">Сменить план</button>
+                <button class="cancel-btn" onclick="cancelSubscription('okko')">Отменить подписку</button>
+            </div>
+        </div>
+
+        <div class="subscription-item">
+            <div class="sub-icon disney">D+</div>
+            <div class="sub-info">
+                <div class="sub-name">Disney+</div>
+                <div class="sub-price">$15.99/мес</div>
+            </div>
+            <div class="sub-actions">
+                <button class="change-plan-btn">Сменить план</button>
+                <button class="cancel-btn" onclick="cancelSubscription('disney')">Отменить подписку</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран налогов -->
+    <div id="tax-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Налоговые уведомления</h2>
+        </div>
+
+        <div class="tax-integration">
+            <h3>Интеграция с ФНС</h3>
+            <div class="tax-status connected">✓ Подключено</div>
+        </div>
+
+        <div class="tax-notifications">
+            <div class="tax-item urgent">
+                <div class="tax-icon">⚠️</div>
+                <div class="tax-info">
+                    <h4>Срок подачи декларации</h4>
+                    <p>До 31 марта необходимо подать декларацию о доходах</p>
+                    <div class="tax-date">Осталось: 45 дней</div>
+                </div>
+            </div>
+
+            <div class="tax-item">
+                <div class="tax-icon">💰</div>
+                <div class="tax-info">
+                    <h4>Налог с зарубежных доходов</h4>
+                    <p>Обнаружены поступления из-за рубежа. Рекомендуется уведомить ФНС</p>
+                </div>
+            </div>
+
+            <div class="tax-item">
+                <div class="tax-icon">👨‍💼</div>
+                <div class="tax-info">
+                    <h4>Статус самозанятого</h4>
+                    <p>Не забудьте подавать уведомления о доходах каждый месяц</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="fns-btn">Перейти на сайт ФНС</button>
+    </div>
+
+    <!-- Экран профиля -->
+    <div id="profile-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Профиль</h2>
+        </div>
+
+        <div class="profile-info">
+            <div class="profile-photo">
+                <img id="profile-photo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNGRkYiLz4KPHBhdGggZD0iTTQwIDIwQzM0LjQ4IDIwIDMwIDI0LjQ4IDMwIDMwQzMwIDM1LjUyIDM0LjQ4IDQwIDQwIDQwQzQ1LjUyIDQwIDUwIDM1LjUyIDUwIDMwQzUwIDI0LjQ4IDQ1LjUyIDIwIDQwIDIwWk00MCA2MEMyNS44MyA2MCAyMCA1NS4xNyAyMCA1MEMyMCA0NC44MyAyNS44MyA0MCA0MCA0MEM1NC4xNyA0MCA2MCA0NC44MyA2MCA1MEM2MCA1NS4xNyA1NC4xNyA2MCA0MCA2MFoiIGZpbGw9IiMzMzMiLz4KPC9zdmc+" alt="Фото профиля">
+                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                <button onclick="document.getElementById('photo-upload').click()">Изменить фото</button>
+            </div>
+
+            <div class="profile-details">
+                <div class="detail-item">
+                    <label>Имя и фамилия</label>
+                    <span>Богдан Фомичев</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>Серия и номер паспорта</label>
+                    <span id="passport-number"></span>
+                </div>
+
+                <div class="detail-item">
+                    <label>ИНН</label>
+                    <span id="inn-number"></span>
+                </div>
+
+                <div class="detail-item">
+                    <label>Телефон</label>
+                    <span>+7 (999) 999-99-99</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран поддержки -->
+    <div id="support-screen" class="screen">
+        <div class="header">
+            <button class="back-btn" onclick="showScreen('main-screen')">←</button>
+            <h2>Поддержка</h2>
+        </div>
+
+        <div class="chat-container">
+            <div id="chat-messages">
+                <div class="message support">
+                    <div class="message-avatar">🎧</div>
+                    <div class="message-content">
+                        <div class="message-text">Здравствуйте! Как дела?</div>
+                        <div class="message-time">14:30</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Напишите сообщение...">
+                <button onclick="sendMessage()">Отправить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
