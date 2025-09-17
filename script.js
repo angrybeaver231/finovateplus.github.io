@@ -1,4 +1,9 @@
 // script.js
+let users = [
+    { phone: '+7 (999) 999-99-99', password: 'finovateplus', isAdmin: false },
+    { phone: '+7 (999) 349-21-27', password: 'bogdan2005B', isAdmin: true }
+];
+
 let userData = {
     name: 'Богдан Фомичев',
     phone: '+7 (999) 999-99-99',
@@ -46,6 +51,20 @@ function updateProfileScreen() {
     document.getElementById('inn-number').textContent = userData.inn;
 }
 
+// Маска для телефона
+function applyPhoneMask(input) {
+    input.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        let formatted = '+7 (';
+        if (value.length > 1) formatted += value.slice(1, 4);
+        if (value.length >= 4) formatted += ') ' + value.slice(4, 7);
+        if (value.length >= 7) formatted += '-' + value.slice(7, 9);
+        if (value.length >= 9) formatted += '-' + value.slice(9, 11);
+        e.target.value = formatted;
+    });
+}
+
 // Авторизация
 document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -53,13 +72,37 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     const phone = document.getElementById('phone').value;
     const password = document.getElementById('password').value;
     
-    if (phone === '+7 (999) 999-99-99' && password === 'finovateplus') {
-        generateRandomData();
-        showScreen('main-screen');
-        showNotification('Добро пожаловать!');
+    const user = users.find(u => u.phone === phone && u.password === password);
+    
+    if (user) {
+        if (user.isAdmin) {
+            showScreen('admin-panel');
+            showNotification('Добро пожаловать в админскую панель!');
+        } else {
+            generateRandomData();
+            showScreen('main-screen');
+            showNotification('Добро пожаловать!');
+        }
     } else {
         showNotification('Неверный логин или пароль', 'error');
     }
+});
+
+// Добавление нового пользователя
+document.getElementById('add-user-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const newPhone = document.getElementById('new-phone').value;
+    const newPassword = document.getElementById('new-password').value;
+    
+    if (users.some(u => u.phone === newPhone)) {
+        showNotification('Пользователь с таким номером уже существует', 'error');
+        return;
+    }
+    
+    users.push({ phone: newPhone, password: newPassword, isAdmin: false });
+    showNotification('Новый пользователь добавлен!');
+    this.reset();
 });
 
 // Выпуск карты
@@ -236,6 +279,12 @@ function showNotification(message, type = 'success') {
 document.addEventListener('DOMContentLoaded', function() {
     // Показать экран входа
     showScreen('login-screen');
+    
+    // Применить маску к полю телефона в логине
+    applyPhoneMask(document.getElementById('phone'));
+    
+    // Применить маску к полю нового телефона в админке
+    applyPhoneMask(document.getElementById('new-phone'));
     
     // Обработчик Enter для отправки сообщений в чате
     document.getElementById('message-input').addEventListener('keypress', function(e) {
